@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: gitea
+    env: docker
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: GITEA__database__HOST
+        value: dpg-cvk1ip9r0fns739ln7t0-a
+      - key: GITEA__database__NAME
+        value: gitea_2vo4
+      - key: GITEA__database__USER
+        value: gitea
+      - key: GITEA__database__PASSWD
+        value: 4KLdeBUeyIEAMaX357R4YPSS3Z7y6LCh
+      - key: GITEA__server__ROOT_URL
+        value: https://gitea-koyeb.onrender.com
+    ports:
+      - type: http
+        port: 3000
+      - type: tcp
+        port: 2222
