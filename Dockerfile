@@ -1,7 +1,25 @@
 FROM gitea/gitea:latest
 
-# Expose Gitea ports
-EXPOSE 3000 22
+# Set environment variables using Render's environment variables
+ENV GITEA__database__DB_TYPE=postgres \
+    GITEA__database__HOST=${POSTGRES_HOST} \
+    GITEA__database__PORT=${POSTGRES_PORT} \
+    GITEA__database__NAME=${POSTGRES_DATABASE} \
+    GITEA__database__USER=${POSTGRES_USER} \
+    GITEA__database__PASSWD=${POSTGRES_PASSWORD} \
+    GITEA__database__SSL_MODE=require \
+    GITEA__server__ROOT_URL=${GITEA_ROOT_URL} \
+    GITEA__server__HTTP_PORT=3000 \
+    GITEA__server__SSH_PORT=2222
 
-# Start Gitea
-CMD ["/usr/bin/entrypoint", "/bin/s6-svscan", "/etc/s6"]
+# Expose web and SSH ports
+EXPOSE 3000 2222
+
+# Persistence volume (Render's ephemeral storage)
+VOLUME /data
+
+# Use default Gitea entrypoint
+ENTRYPOINT ["/usr/bin/entrypoint"]
+
+# Start command
+CMD ["/bin/s6-svscan", "/etc/s6"]
