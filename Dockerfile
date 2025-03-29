@@ -1,7 +1,10 @@
 FROM gitea/gitea:latest
 
-# Expose Gitea ports
+# Set working directory
+WORKDIR /data
+
+# Expose necessary ports
 EXPOSE 3000 22
 
-# Start Gitea
-CMD ["/usr/bin/entrypoint", "/bin/s6-svscan", "/etc/s6"]
+# Use Gitea's default entrypoint
+CMD ["/usr/bin/entrypoint"]
