@@ -1,17 +1,22 @@
+# Dockerfile
 FROM gitea/gitea:latest
 
+# Set environment variables directly with your credentials
 ENV GITEA__database__DB_TYPE=postgres \
-    GITEA__database__HOST=dpg-cvk1ip9r0fns739ln7t0-a \ 
+    GITEA__database__HOST=primary.gitea-db--yvl9svt4dqy6.addon.code.run \
     GITEA__database__PORT=5432 \
-    GITEA__database__NAME=gitea_2vo4 \ 
-    GITEA__database__USER=gitea \ 
-    GITEA__database__PASSWD=4KLdeBUeyIEAMaX357R4YPSS3Z7y6LCh \
+    GITEA__database__NAME=gitea \
+    GITEA__database__USER=_e1d336330a46dfb5 \
+    GITEA__database__PASSWD=_02cc845ebfa2de6aa19d4b09901e88 \
     GITEA__database__SSL_MODE=require \
-    GITEA__server__ROOT_URL=https://gitea-koyeb.onrender.com \
-    GITEA__server__PROTOCOL=http \
-    GITEA__server__HTTP_PORT=3000 \
-    GITEA__server__REDIRECT_OTHER_PORT=true
+    GITEA__server__ROOT_URL=https://your-domain.com \
+    GITEA__server__HTTP_PORT=3000
 
-EXPOSE 3000
+# Persist Gitea data
 VOLUME /data
+
+# Expose web interface port
+EXPOSE 3000
+
+# Keep default entrypoint
 ENTRYPOINT ["/usr/bin/entrypoint"]
