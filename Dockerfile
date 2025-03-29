@@ -19,7 +19,4 @@ EXPOSE 3000 2222
 VOLUME /data
 
 # Use default Gitea entrypoint
-ENTRYPOINT ["/usr/bin/entrypoint"]
-
-# Start command
-CMD ["/bin/s6-svscan", "/etc/s6"]
+ENTRYPOINT ["/usr/bin/entrypoint"] 
