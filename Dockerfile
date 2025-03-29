@@ -10,7 +10,7 @@ ENV GITEA__database__DB_TYPE=postgres \
     GITEA__database__SSL_MODE=require \
     GITEA__server__ROOT_URL=${GITEA_ROOT_URL} \
     GITEA__server__PROTOCOL=https \
-    GITEA__server__REDIRECT_OTHER_PORT=true
+    GITEA__server__REDIRECT_OTHER_PORT=true \
     GITEA__server__HTTP_PORT=3000 
 
 # Expose web and SSH ports
