@@ -1,9 +1,9 @@
 FROM gitea/gitea:latest
 
-# 1. Install tools for debugging
-RUN apk add --no-cache ca-certificates postgresql-client curl
+# Install connection tools
+RUN apk add --no-cache postgresql-client
 
-# 2. Override ALL database settings (use your admin credentials)
+# Force PostgreSQL configuration (USE YOUR CREDENTIALS)
 ENV GITEA__database__DB_TYPE=postgres \
     GITEA__database__HOST=primary.gitea-db--yvl9svt4dqy6.addon.code.run \
     GITEA__database__PORT=5432 \
@@ -14,9 +14,15 @@ ENV GITEA__database__DB_TYPE=postgres \
     GITEA__security__INSTALL_LOCK=true \
     GITEA__server__ROOT_URL=https://p01--gitea-app--yvl9svt4dqy6.code.run
 
-# 3. Delete any existing config on startup
-RUN echo "#!/bin/sh\nrm -f /data/gitea/conf/app.ini\n/usr/bin/entrypoint \"\$@\"" > /start.sh && chmod +x /start.sh
+# Pre-test connection before starting
+ENTRYPOINT ["sh", "-c", "\
+  echo 'Waiting for PostgreSQL...'; \
+  until PGPASSWORD='_5b1b693c837a8f58ca6cdfe5de8b48' psql -h 'primary.gitea-db--yvl9svt4dqy6.addon.code.run' -p 5432 -U '_675e010780806d3b' -d 'gitea' -c 'SELECT 1;' >/dev/null; do \
+    sleep 5; \
+  done; \
+  echo 'Starting Gitea...'; \
+  /usr/bin/entrypoint \
+"]
 
-ENTRYPOINT ["sh", "-c", "echo 'Waiting for PostgreSQL...'; sleep 30 && /usr/bin/entrypoint"]
 VOLUME /data
 EXPOSE 3000
