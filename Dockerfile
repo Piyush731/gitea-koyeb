@@ -17,6 +17,6 @@ ENV GITEA__database__DB_TYPE=postgres \
 # 3. Delete any existing config on startup
 RUN echo "#!/bin/sh\nrm -f /data/gitea/conf/app.ini\n/usr/bin/entrypoint \"\$@\"" > /start.sh && chmod +x /start.sh
 
-ENTRYPOINT ["/start.sh"]
+ENTRYPOINT ["sh", "-c", "echo 'Waiting for PostgreSQL...'; sleep 30 && /usr/bin/entrypoint"]
 VOLUME /data
 EXPOSE 3000
