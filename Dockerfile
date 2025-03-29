@@ -9,7 +9,7 @@ ENV GITEA__database__DB_TYPE=postgres \
     GITEA__database__USER=_e1d336330a46dfb5 \
     GITEA__database__PASSWD=_02cc845ebfa2de6aa19d4b09901e88 \
     GITEA__database__SSL_MODE=require \
-    GITEA__server__ROOT_URL=https://your-domain.com \
+    GITEA__server__ROOT_URL=https://p01--gitea-app--yvl9svt4dqy6.code.run/ \
     GITEA__server__HTTP_PORT=3000
 
 # Persist Gitea data
